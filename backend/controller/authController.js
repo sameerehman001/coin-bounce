@@ -1,6 +1,7 @@
 const Joi = require('joi');
 const User = require('../models/user');
 const bcrypt = require("bcryptjs");
+const user = require('../models/user');
 
 const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,25}$/;
 
@@ -70,7 +71,55 @@ const authController = {
     },
 
 
-    async login(){}
+    async login(req, res, next){
+        // 1. validate user input
+        // 2. if validate error, return error
+        // 3. match username and password
+        // 4. return response
+
+        const userLoginSchema = Joi.object({
+            username: Joi.string().min(5).max(30).required(),
+            password: Joi.string().pattern(passwordPattern)
+        });
+
+        const {error} = userLoginSchema.validate(req.body);
+
+        if(error){
+            return next(error);
+        }
+
+        const {username, password} = req.body;
+        let user;
+        try{
+            user = await User.findOne({username: username});
+
+            if(!user){
+                const error = {
+                    status: 401,
+                    message: 'Invalid username'
+                }
+
+                return next(error);
+            }
+
+            const match =  await bycript.compare(password, user.password);
+
+            if(!match){
+                const error = {
+                    status : 401,
+                    message: 'Invalid password'
+                }
+
+                return next(error);
+            }
+
+        }
+        catch(error){
+            return next(error);
+            
+        }
+        return res.status(200).json({user: user});
+    },
 }
 
 module.exports = authController;
