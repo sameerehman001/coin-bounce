@@ -2,6 +2,7 @@ const Joi = require('joi');
 const User = require('../models/user');
 const bcrypt = require("bcryptjs");
 const user = require('../models/user');
+const UserDTO = require('../dto/user');
 
 const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,25}$/;
 
@@ -66,7 +67,9 @@ const authController = {
         const user = await userToRegister.save();
 
         // 6. response send
-        return res.status(201).json({user})
+        const userDto = new UserDTO(user);
+
+        return res.status(201).json({user: userDto})
         
     },
 
@@ -118,7 +121,10 @@ const authController = {
             return next(error);
             
         }
-        return res.status(200).json({user: user});
+
+        const userDto = new UserDTO(user);
+
+        return res.status(200).json({user: userDto});
     },
 }
 
