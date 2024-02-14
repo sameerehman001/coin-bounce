@@ -4,9 +4,14 @@ import Home from "./pages/Home/Home";
 import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
 import Protected from "./components/Protected/Protected";
+import Login from './pages/Login/Login'
+import Signup from './pages/Signup/Signup'
+import Crypto from './pages/Crypto/Crypto'
+import Blog from './pages/Blog/Blog'
+import SubmitBlog from './pages/SubmitBlog/SubmitBlog'
 
 function App() {
-  const isAuth = false;
+  const isAuth = true;
   return (
     <div>
       <BrowserRouter>
@@ -31,13 +36,13 @@ function App() {
             />
             <Route
               path="crypto"
-              element={<div className={styles.main}>Cryptocurrencies</div>}
+              element={<div className={styles.main}><Crypto /></div>}
             />
             <Route
               path="blogs"
               element={
                 <Protected isAuth={isAuth}>
-                  <div className={styles.main}>Blogs</div>
+                  <div className={styles.main}><Blog /></div>
                 </Protected>
               }
             />
@@ -45,17 +50,17 @@ function App() {
               path="submit"
               element={
                 <Protected isAuth={isAuth}>
-                  <div className={styles.main}>Submit</div>
+                  <div className={styles.main}><SubmitBlog /></div>
                 </Protected>
               }
             />
             <Route
               path="login"
-              element={<div className={styles.main}>Log-in</div>}
+              element={<div className={styles.main}><Login /></div>}
             />
             <Route
-              path="signin"
-              element={<div className={styles.main}>Sign In</div>}
+              path="signup"
+              element={<div className={styles.main}><Signup /></div>}
             />
           </Routes>
           <Footer />
