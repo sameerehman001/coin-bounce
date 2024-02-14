@@ -3,8 +3,10 @@ import styles from "./App.module.css";
 import Home from "./pages/Home/Home";
 import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
+import Protected from "./components/Protected/Protected";
 
 function App() {
+  const isAuth = false;
   return (
     <div>
       <BrowserRouter>
@@ -33,18 +35,26 @@ function App() {
             />
             <Route
               path="blogs"
-              element={<div className={styles.main}>Blogs</div>}
+              element={
+                <Protected isAuth={isAuth}>
+                  <div className={styles.main}>Blogs</div>
+                </Protected>
+              }
             />
             <Route
               path="submit"
-              element={<div className={styles.main}>Submit</div>}
+              element={
+                <Protected isAuth={isAuth}>
+                  <div className={styles.main}>Submit</div>
+                </Protected>
+              }
             />
             <Route
-              path="log-in"
+              path="login"
               element={<div className={styles.main}>Log-in</div>}
             />
             <Route
-              path="sign-in"
+              path="signin"
               element={<div className={styles.main}>Sign In</div>}
             />
           </Routes>
