@@ -9,9 +9,10 @@ import Signup from './pages/Signup/Signup'
 import Crypto from './pages/Crypto/Crypto'
 import Blog from './pages/Blog/Blog'
 import SubmitBlog from './pages/SubmitBlog/SubmitBlog'
+import Error from './pages/Error/Error'
 
 function App() {
-  const isAuth = true;
+  const isAuth = false;
   return (
     <div>
       <BrowserRouter>
@@ -61,6 +62,10 @@ function App() {
             <Route
               path="signup"
               element={<div className={styles.main}><Signup /></div>}
+            />
+            <Route
+              path="*"
+              element={<div className={styles.main}><Error /></div>}
             />
           </Routes>
           <Footer />
